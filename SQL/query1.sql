@@ -1,3 +1,4 @@
+CREATE DATABASE instagram;
 USE instagram;
 
 CREATE TABLE user (
