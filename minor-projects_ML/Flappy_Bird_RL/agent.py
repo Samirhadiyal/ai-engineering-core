@@ -4,6 +4,7 @@ from DQN import dqn
 import torch
 import torch.nn as nn
 from experience_replay import ReplayMemory
+import itertools
 
 # detect gpu and set gpu 
 if torch.cuda.is_available():
@@ -20,24 +21,28 @@ def run(self, is_training=True, render = False):
     
     policy_dqn = DQN(num_states, num_actions).to(device)
     
-    state, _ = env.reset()
     
     if is_training:
         memory = ReplayMemory(10000)
     
-    while True:
-        # Next action:
-        # (feed the observation to your agent here)
-        action = env.action_space. sample()
+    for episode in itertools.count():
+        
+        state, _ = env.reset()
+        episode_rewards = 0
+        
+        while not terminated:
+            action = env.action_space. sample()
 
-        # Processing: terminated => done 
-        next_state, reward, terminated, _, _ = env.step(action)
+            
+            next_state, reward, terminated, _, _ = env.step(action)
 
-        if is_training:
-            memory.append((state, action, next_state, reward, terminated))
+            if is_training:
+                memory.append((state, action, next_state, reward, terminated))
 
-        # Checking if the payer is still alive
-        if terminated:
-            break
+            # Checking if the payer is still alive
+            if terminated:
+                break
 
-    env.close()
+    #env.close() - manually stop
+
+    
