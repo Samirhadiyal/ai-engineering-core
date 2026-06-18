@@ -66,9 +66,10 @@ class Agent:
                     action = env.action_space.sample() # Explore
                     action = torch.tensor(action, dtype = torch.long, device = device)
                 else:
-                    action = policy_dqn(state.unsqueeze(dim = 0)).squeeze().argmax() # Exploit
+                    with torch.no_grad():
+                        action = policy_dqn(state.unsqueeze(dim = 0)).squeeze().argmax() # Exploit
 
-                next_state, reward, terminated, _, _ = env.step(action)
+                next_state, reward, terminated, _, _ = env.step(action.item())
 
                 # Create tensors
                 reward = torch.tensor(reward, dtype = torch.float, device = device)
