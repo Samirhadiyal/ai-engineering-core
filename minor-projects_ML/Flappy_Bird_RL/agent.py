@@ -1,3 +1,4 @@
+from random import random
 import flappy_bird_gymnasium
 import gymnasium as gym
 from DQN import dqn
@@ -29,10 +30,8 @@ class Agent:
         self.epsilon_min = params["epsilon_min"]
         self.epsilon_decay = params["epsilon_decay"]
         
-        
         self.replay_memory_size = params["replay_memory_size"]
         self.mini_batch_size = params["mini_batch_size"]
-        
         
         self.network_sync_rate = params["network_sync_rate"]
         self.reward_threshold = params["reward_threshold"]
@@ -51,25 +50,29 @@ class Agent:
         
         
         if is_training:
-            memory = ReplayMemory(10000)
-        
+            memory = ReplayMemory(self.replay_memory_size)
+            epsilon = self.epsilon_init
+            
         for episode in itertools.count():
             state, _ = env.reset()
             episode_rewards = 0
             terminated = False
             
             while not terminated:
-                action = env.action_space. sample()
-
                 
+                if is_training and random.random() < epsilon:
+                    action = env.action_space.sample() # Explore
+                else:
+                    action = policy_dqn(state.unsqueeze(dim = 0)).squeeze().argmax() # Exploit
+
                 next_state, reward, terminated, _, _ = env.step(action)
 
                 if is_training:
                     memory.append((state, action, next_state, reward, terminated))
 
-                state = new_state
-                episode_rewards += rewards
-            
+                state = next_state
+                episode_rewards += reward
+
             print(f"episode={episode+1}, with total reward={episode_rewards}")
         #env.close() - manually stop
     
