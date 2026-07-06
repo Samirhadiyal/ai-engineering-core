@@ -1,3 +1,5 @@
 Deep Learning/CNN/data/
 Deep Learning/CNN/data/
 run/
+.venv/
+.vscode/
