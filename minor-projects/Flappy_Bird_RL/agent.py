@@ -54,6 +54,10 @@ class Agent :
         policy_dqn = DQN(num_state,num_actions).to(device)
         state, _ = env.reset()
 
+        print("Observation space:", env.observation_space)
+        print("State length:", len(state))
+        print("State:", state)
+
         if is_training:
             memory = ReplayMemory(self.replay_memory_size)
             epsilon = self.epsilon_init
@@ -105,8 +109,10 @@ class Agent :
                     step +=1
 
                     state = next_state 
-                   
-                print(f"for episode: {episode} => reward :{episode_reward}")
+                    print(f"for episode: {episode} => reward :{episode_reward}, epsilon: {epsilon}")
+                
+                else:
+                    print(f"for episode: {episode} => reward :{episode_reward}")
 
                 if is_training:
                     #epsilon decay 
