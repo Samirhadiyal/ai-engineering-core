@@ -1,4 +1,0 @@
-{
-    "sqltools.connections": [],
-    "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\python.exe"
-}
