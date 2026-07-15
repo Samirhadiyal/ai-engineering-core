@@ -3,3 +3,4 @@ Deep Learning/CNN/data/
 run/
 .venv/
 .vscode/
+.env
