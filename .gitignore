@@ -4,3 +4,4 @@ run/
 .venv/
 .vscode/
 .env
+Deep Learning/RAG/data/vector_store/
