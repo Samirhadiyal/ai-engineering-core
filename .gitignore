@@ -5,3 +5,4 @@ run/
 .vscode/
 .env
 Deep Learning/RAG/data/vector_store/
+.bin
